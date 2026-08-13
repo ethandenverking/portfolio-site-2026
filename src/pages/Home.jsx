@@ -27,7 +27,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-object-cell">
-          <HeroObject />
+          <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
         </div>
       </section>
 

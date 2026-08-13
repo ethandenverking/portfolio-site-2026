@@ -1,13 +1,13 @@
 export const site = {
-  name: 'A. Developer',
-  initials: 'A.D.',
-  kicker: 'Frontend engineer, 2 yrs',
-  headline: 'I write the interface layer.',
+  name: 'Ethan King',
+  initials: 'E.K.',
+  kicker: 'Softare Engineer',
+  headline: 'Solving hard problems',
   intro:
     'Two years in, four things shipped — small teams, real users, front-of-stack work from layout to state.',
-  email: 'a.dev@mail.com',
-  github: 'https://github.com/',
-  linkedin: 'https://www.linkedin.com/',
+  email: 'ethandenverking@gmail.com',
+  github: 'https://github.com/ethandenverking',
+  linkedin: 'https://www.linkedin.com/in/ethankingdev/',
 }
 
 export const projects = [

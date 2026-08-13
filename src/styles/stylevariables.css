@@ -67,7 +67,7 @@
 }
 
 body {
-  background: var(--color-bg);
+  background: linear-gradient(to top, #ffd8ba, #ffe6b8, #ffc2cf, #d9b3e0, #a8c6f0);
   color: var(--color-text);
   font-family: var(--font-body);
 }
