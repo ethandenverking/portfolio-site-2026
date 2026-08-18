@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom'
 import { site } from '../data/content.js'
 
 export default function Nav() {
   return (
-    <header className="site-nav nav">
-      <div className="site-nav-inner">
-        <Link to="/" className="nav-brand">{site.name}</Link>
-        <nav className="site-nav-links">
-          <a href="/#projects">Projects</a>
-          <a href="/#contact" className="is-accent">Contact</a>
+    <header className="site-header">
+      <div className="container site-header-inner">
+        <div className="brand-card tilt-l">
+          <p className="nav-brand">{site.name}</p>
+          <div className="brand-tagline">{site.tagline}</div>
+        </div>
+        <nav className="nav-pill">
+          <a href="/#work">Work</a>
+          <a href="/#contact">Contact</a>
         </nav>
       </div>
     </header>

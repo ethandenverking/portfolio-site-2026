@@ -3,7 +3,8 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
 
-// The hero object: renders a custom glTF model when `modelUrl` is given, otherwise a static wireframe cube-in-cube.
+// The hero object: renders a custom glTF/STL model when `modelUrl` is given, otherwise a static wireframe cube-in-cube.
+// Idle-spins, tilts toward the pointer, and bobs gently — matching the "Layered Collage" hero treatment.
 export default function HeroObject({ modelUrl } = {}) {
   const mountRef = useRef(null)
 
@@ -26,6 +27,12 @@ export default function HeroObject({ modelUrl } = {}) {
     const disposables = []
     const render = () => renderer.render(scene, camera)
 
+    let model = null
+    let raf = null
+    let t = 0
+    let pointer = 0
+    let target = 0
+
     const resize = () => {
       const { clientWidth, clientHeight } = mount
       if (!clientWidth || !clientHeight) return
@@ -35,28 +42,42 @@ export default function HeroObject({ modelUrl } = {}) {
       render()
     }
 
-    if (modelUrl) {
-      // sky/ground tint pulled from the page's pastel sunset gradient (peach to soft blue)
-      scene.add(new THREE.HemisphereLight(0xffd8ba, 0xa8c6f0, 1.2))
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.5)
-      keyLight.position.set(3, 4, 5)
-      scene.add(keyLight)
+    const tick = () => {
+      raf = requestAnimationFrame(tick)
+      if (!model) return
+      t += 0.006
+      pointer += (target - pointer) * 0.05
+      model.rotation.y = t + pointer
+      model.position.y = Math.sin(t * 1.6) * 0.09
+      render()
+    }
 
-      // normalize scale/position so models of any size/units frame the same as the fallback cube
-      const frameModel = (model) => {
-        const box = new THREE.Box3().setFromObject(model)
+    const onMove = (e) => {
+      target = ((e.clientX / window.innerWidth) - 0.5) * 1.2
+    }
+
+    if (modelUrl) {
+      // sky/ground tint pulled from the page's pastel sunset gradient
+      scene.add(new THREE.HemisphereLight(0xffc2cf, 0xa8c6f0, 1.1))
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.7)
+      keyLight.position.set(2.5, 4, 5)
+      scene.add(keyLight)
+      const rimLight = new THREE.DirectionalLight(0xb5abfc, 1.1)
+      rimLight.position.set(-4, 1, -2)
+      scene.add(rimLight)
+
+      // normalize scale/position so models of any size/units frame the same
+      const frameModel = (mesh) => {
+        const pivot = new THREE.Group()
+        pivot.add(mesh)
+        const box = new THREE.Box3().setFromObject(mesh)
         const size = box.getSize(new THREE.Vector3())
         const center = box.getCenter(new THREE.Vector3())
-        const scale = 5 / (Math.max(size.x, size.y, size.z) || 1)
-        model.scale.setScalar(scale)
-        model.position.sub(center.multiplyScalar(scale))
-        // shift right/down relative to the visible width at the model's depth, clear of the hero text
-        const distance = camera.position.z - model.position.z
-        const visibleHeight = 2 * distance * Math.tan((camera.fov * Math.PI) / 360)
-        const visibleWidth = visibleHeight * camera.aspect
-        model.position.x += visibleWidth * 0.35
-        model.position.y -= visibleWidth * 0.1
-        scene.add(model)
+        const scale = 4.1 / (Math.max(size.x, size.y, size.z) || 1)
+        mesh.scale.setScalar(scale)
+        mesh.position.sub(center.multiplyScalar(scale))
+        scene.add(pivot)
+        model = pivot
         render()
       }
 
@@ -64,7 +85,7 @@ export default function HeroObject({ modelUrl } = {}) {
         new STLLoader().load(
           modelUrl,
           (geometry) => {
-            const material = new THREE.MeshStandardMaterial({ color: '#ffffff', wireframe: false })
+            const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.5, metalness: 0.08 })
             const mesh = new THREE.Mesh(geometry, material)
             // Blender STL exports are Z-up; rotate to three.js's Y-up so the model stands upright
             mesh.rotation.x = -Math.PI / 2
@@ -79,15 +100,15 @@ export default function HeroObject({ modelUrl } = {}) {
         new GLTFLoader().load(
           modelUrl,
           (gltf) => {
-            const model = gltf.scene
-            model.traverse((child) => {
+            const mesh = gltf.scene
+            mesh.traverse((child) => {
               if (child.isMesh) {
                 child.material.wireframe = false
                 child.material.map = null
                 child.material.color.set('#ffffff')
               }
             })
-            frameModel(model)
+            frameModel(mesh)
           },
           undefined,
           (error) => console.error('HeroObject: failed to load model', modelUrl, error)
@@ -105,17 +126,21 @@ export default function HeroObject({ modelUrl } = {}) {
       )
       innerCube.rotation.set(0.4, 0.4, 0)
       group.add(outerCube, innerCube)
-      group.rotation.set(0.3, 0.5, 0)
       scene.add(group)
+      model = group
       disposables.push(outerCube.geometry, outerCube.material, innerCube.geometry, innerCube.material)
     }
 
     resize()
+    tick()
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(mount)
+    window.addEventListener('pointermove', onMove, { passive: true })
 
     return () => {
+      cancelAnimationFrame(raf)
       resizeObserver.disconnect()
+      window.removeEventListener('pointermove', onMove)
       mount.removeChild(renderer.domElement)
       disposables.forEach((disposable) => disposable.dispose())
       renderer.dispose()

@@ -1,7 +1,8 @@
 export const site = {
   name: 'Ethan King',
   initials: 'E.K.',
-  kicker: 'Softare Engineer',
+  tagline: 'Software engineer · Denver',
+  kicker: 'Portfolio 2026',
   headline: 'Solving hard problems',
   intro:
     'Two years in, four things shipped — small teams, real users, front-of-stack work from layout to state.',

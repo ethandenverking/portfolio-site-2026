@@ -1,11 +1,11 @@
 import { site } from '../data/content.js'
-import { GithubIcon, LinkedinIcon, MailIcon } from './icons.jsx'
+import { GithubIcon, LinkedinIcon } from './icons.jsx'
 
 export default function Footer() {
   return (
     <footer id="contact" className="site-footer">
-      <div className="site-footer-inner">
-        <div className="site-footer-text">
+      <div className="container site-footer-inner">
+        <div className="footer-card">
           <div className="kicker">Hiring?</div>
           <a className="site-footer-email" href={`mailto:${site.email}`}>{site.email}</a>
         </div>
@@ -16,10 +16,10 @@ export default function Footer() {
           <a className="btn btn-icon btn-secondary" href={site.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
             <LinkedinIcon />
           </a>
-          <a className="btn btn-icon btn-secondary" href={`mailto:${site.email}`} aria-label="Email">
-            <MailIcon />
-          </a>
         </div>
+      </div>
+      <div className="site-footer-bottom">
+        <span>&copy; {new Date().getFullYear()} {site.name}</span>
       </div>
     </footer>
   )

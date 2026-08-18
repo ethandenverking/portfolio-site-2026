@@ -1,10 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { site, projects } from '../data/content.js'
 import HeroObject from '../components/HeroObject.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import { GithubIcon } from '../components/icons.jsx'
 
+const TILTS = ['-1.6deg', '1.4deg', '1.1deg', '-1.3deg']
+const SHOTS = ['10% 20%', '70% 40%', '30% 75%', '85% 15%']
+
 export default function Home() {
+  const scrapARef = useRef(null)
+  const scrapBRef = useRef(null)
+
   useEffect(() => {
     if (window.location.hash) {
       const el = document.querySelector(window.location.hash)
@@ -12,33 +18,62 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      if (scrapARef.current) scrapARef.current.style.transform = `rotate(${-7 + y * 0.006}deg) translateY(${y * 0.12}px)`
+      if (scrapBRef.current) scrapBRef.current.style.transform = `rotate(${5 - y * 0.004}deg) translateY(${-y * 0.08}px)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
       <section className="hero">
-        <div className="hero-copy">
-          <div className="kicker">{site.kicker}</div>
-          <h1>{site.headline}</h1>
-          <p className="hero-intro">{site.intro}</p>
-          <div className="hero-actions">
-            <a className="btn btn-primary" href="#projects">Projects</a>
-            <a className="btn btn-secondary" href={site.github} target="_blank" rel="noreferrer">
-              <GithubIcon /> GitHub
-            </a>
+        <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
+        <div className="container hero-grid">
+          <div className="hero-copy-card">
+            <span className="pill-badge">{site.kicker}</span>
+            <h1>{site.headline}</h1>
+            <p className="hero-intro">{site.intro}</p>
+            <div className="hero-actions">
+              <a className="btn btn-primary" href="#work">Selected work</a>
+              <a className="btn btn-secondary" href={site.github} target="_blank" rel="noreferrer">
+                <GithubIcon /> GitHub
+              </a>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="hero-image-card">
+              <div className="hero-object-cell">
+                <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
+              </div>
+              <span className="hero-caption">Fig. 01 — the thinker, low poly</span>
+            </div>
           </div>
         </div>
-        <div className="hero-object-cell">
-          <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
-        </div>
+        <div ref={scrapBRef} className="scrap scrap-b" aria-hidden="true" />
       </section>
 
-      <section id="projects" className="projects-section">
-        <div className="section-heading">
-          <div className="kicker">Selected projects</div>
-        </div>
-        <div className="project-grid">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+      <section id="work" className="projects-section">
+        <div className="container">
+          <div className="section-heading">
+            <span className="pill-badge pill-badge-dark">
+              Selected work / {String(projects.length).padStart(2, '0')}
+            </span>
+          </div>
+          <div className="project-grid">
+            {projects.map((project, i) => (
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                index={i + 1}
+                tilt={TILTS[i % 4]}
+                shot={SHOTS[i % 4]}
+              />
+            ))}
+          </div>
         </div>
       </section>
     </>

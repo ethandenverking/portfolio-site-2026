@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --color-bg: #161826;
-  --color-surface: #232532;
+  --color-bg: #292929;
+  --color-surface: #1e1e1e;
   --color-text: #e9e9ed;
-  --color-accent: #9184d9;
+  --color-accent: #d6d6d6;
   --color-accent-2: #a7a1db;
   --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
 
@@ -45,6 +45,14 @@
   --color-section-glow: #353b80;
   --color-section-ghost: #4c5397;
 
+  /* Paper collage — flat cut-paper cards, square corners, hard offset shadows. */
+  --paper: #fdf6ee;
+  --paper-muted: color-mix(in srgb, #fdf6ee 92%, #17171a);
+  --ink: #17171a;
+  --ink-soft: color-mix(in srgb, #17171a 62%, transparent);
+  --ink-faint: color-mix(in srgb, #17171a 38%, transparent);
+  --paper-border: 2px solid var(--ink);
+
   --font-heading: "Inter", system-ui, sans-serif;
   --font-heading-weight: 500;
   --font-body: "Inter", system-ui, sans-serif;
@@ -68,10 +76,11 @@
 
 body {
   background: linear-gradient(to top, #ffd8ba, #ffe6b8, #ffc2cf, #d9b3e0, #a8c6f0);
-  color: var(--color-text);
+  background-attachment: fixed;
+  color: var(--ink);
   font-family: var(--font-body);
 }
-h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); color: var(--ink); }
 
 .lighten{mix-blend-mode:lighten;background-color:transparent}
 
@@ -80,7 +89,7 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-headi
    ══════════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400; }
+body { margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400; overflow-x: hidden; }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
@@ -92,17 +101,17 @@ h4 { font-size: 20px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 p { margin: 0 0 var(--space-3); }
-a { color: var(--color-accent); text-underline-offset: 3px; }
+a { color: inherit; text-underline-offset: 3px; }
 img { display: block; max-width: 100%; }
 figure { margin: 0; }
 figcaption {
   font-size: 11px; margin-top: var(--space-1);
   color: color-mix(in srgb, var(--color-text) 55%, transparent);
 }
-.text-muted { color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.text-muted { color: var(--ink-soft); }
 :focus { outline: none; }
-:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--ink) 25%, transparent); }
 
 /* — rules — */
 .hr {
@@ -114,26 +123,24 @@ figcaption {
 
 /* — buttons — */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   cursor: pointer; text-decoration: none;
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 14px; line-height: 1.2; color: var(--color-text);
-  background: transparent; border: 1px solid transparent;
-  padding: var(--space-2) calc(var(--space-3) * 1.2);
-  border-radius: var(--radius-md);
+  font-family: var(--font-heading); font-weight: 500;
+  font-size: 16px; line-height: 1.2; color: var(--ink);
+  background: var(--paper); border: 2px solid var(--ink);
+  padding: 12px 20px;
+  box-shadow: 5px 5px 0 rgba(23, 23, 26, 0.35);
 }
 .btn svg { display: block; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { color: var(--color-accent); border-color: var(--color-accent); }
-.btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
-.btn-primary:active { background: color-mix(in srgb, var(--color-accent) 22%, transparent); }
-.btn-secondary { border-color: var(--color-divider); }
-.btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
-.btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
-.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
-.btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
-.btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
-.btn-icon { width: 36px; height: 36px; padding: 0; }
+.btn-primary { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.btn-primary:hover { background: var(--paper); color: var(--ink); }
+.btn-secondary { border-color: var(--ink); background: transparent; }
+.btn-secondary:hover { background: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--ink); border-color: transparent; background: transparent; box-shadow: none; padding-inline: var(--space-1); }
+.btn-ghost:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.btn-ghost:active { background: color-mix(in srgb, var(--ink) 14%, transparent); }
+.btn-icon { width: 44px; height: 44px; padding: 0; box-shadow: none; background: var(--paper); }
 .btn-block { width: 100%; margin-top: var(--space-2); }
 
 /* — forms — */
@@ -180,32 +187,33 @@ textarea.input { min-height: 90px; resize: vertical; }
 /* — cards — */
 .card {
   display: flex; flex-direction: column; gap: var(--space-2);
-  padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
+  padding: var(--space-3); background: var(--paper);
+  border: var(--paper-border); box-shadow: 12px 12px 0 rgba(23, 23, 26, 0.55);
 }
-.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
 .card-title {
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-family: var(--font-heading); font-weight: 500;
   font-size: 17px; line-height: 1.2;
 }
 .card-body { margin: 0; font-size: 13px; opacity: 0.8; flex: 1; }
 .card-meta {
   display: flex; align-items: center; gap: 6px; font-size: 11px;
-  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+  color: var(--ink-faint);
 }
-.elev-sm { box-shadow: var(--shadow-sm); }
-.elev-md { box-shadow: var(--shadow-md); }
-.elev-lg { box-shadow: var(--shadow-lg); }
+.elev-sm { box-shadow: 9px 9px 0 rgba(23, 23, 26, 0.85); }
+.elev-md { box-shadow: 12px 12px 0 rgba(23, 23, 26, 0.55); }
+.elev-lg { box-shadow: 14px 14px 0 rgba(23, 23, 26, 0.85); }
 
 /* — tags — */
 .tag {
-  display: inline-flex; align-items: center; font-size: 11px;
-  letter-spacing: 0.02em; padding: 3px 10px;
-  border-radius: calc(var(--radius-md) * 0.75);
+  display: inline-flex; align-items: center; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 9px;
 }
-.tag-accent { background: var(--color-accent-800); color: var(--color-accent-100); }
-.tag-accent-2 { background: var(--color-accent-2-800); color: var(--color-accent-2-100); }
-.tag-neutral { background: var(--color-neutral-800); color: var(--color-neutral-100); }
-.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+.tag-accent { background: var(--ink); color: var(--paper); }
+.tag-accent-2 { background: var(--ink); color: var(--paper); }
+.tag-neutral { border: 1px solid var(--ink-faint); color: var(--ink-soft); }
+.tag-outline { border: 1px solid var(--ink-faint); color: var(--ink-soft); }
 
 /* — navigation — */
 .nav {
@@ -214,11 +222,11 @@ textarea.input { min-height: 90px; resize: vertical; }
   border-bottom: none;
 }
 .nav-brand {
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 18px; margin-right: auto; text-decoration: none; color: var(--color-text);
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: 18px; margin: 0; text-decoration: none; color: var(--ink);
 }
-.nav a { color: inherit; text-decoration: none; font-size: 14px; }
-.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent); }
+.nav a { color: inherit; text-decoration: none; font-size: 14px; transition: font-size 0.2s ease; }
+.nav a:hover, .nav a[aria-current='page'] { opacity: 0.7; }
 
 /* — tables — */
 .table { width: 100%; border-collapse: collapse; font-size: 14px; }
