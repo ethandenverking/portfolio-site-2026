@@ -241,10 +241,28 @@
 .project-card-media .shot {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.project-card-media img { object-fit: cover; }
+.project-card-media .shot {
   background-image: url('/squiggletest.png');
   background-size: 180% auto;
   background-position: var(--shot, center);
   opacity: 0.9;
+}
+.project-card-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--paper, #fdf6ee);
+  background: rgba(23, 23, 26, 0.25);
+  transition: background 0.2s ease;
+}
+.project-card:hover .project-card-play {
+  background: rgba(23, 23, 26, 0.4);
 }
 .project-card-index {
   position: absolute;
@@ -253,8 +271,9 @@
   font-size: 34px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: var(--paper);
-  mix-blend-mode: difference;
+  color: #fff;
+  -webkit-text-stroke: 1.5px var(--ink);
+  text-shadow: 1px 0 var(--ink), -1px 0 var(--ink), 0 1px var(--ink), 0 -1px var(--ink);
 }
 .project-card-body {
   display: flex;
@@ -330,6 +349,14 @@
   gap: 8px;
   transform: rotate(1.4deg);
 }
+.site-footer-links .btn-icon {
+  width: 66px;
+  height: 66px;
+}
+.site-footer-links .btn-icon svg {
+  width: 27px;
+  height: 27px;
+}
 .site-footer-bottom {
   position: relative;
   overflow: hidden;
@@ -354,7 +381,7 @@
 }
 .project-detail .scrap-a {
   top: 0;
-  right: 4vw;
+  right: 20vw;
   width: 26vw;
   height: 26vw;
   max-width: 340px;
@@ -418,6 +445,11 @@
   line-height: 1.5;
   color: rgba(23, 23, 26, 0.8);
 }
+.project-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
 .project-detail-sidebar {
   background: #1e1e1e;
   border: var(--paper-border);
@@ -446,6 +478,33 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+.project-detail-image {
+  position: relative;
+  z-index: 2;
+  height: 46vw;
+  min-height: 320px;
+  max-height: 560px;
+  margin: 0 0 40px;
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--paper-border);
+  box-shadow: 14px 14px 0 rgba(23, 23, 26, 0.5);
+  transform: rotate(-0.6deg);
+}
+.project-detail-image img,
+.project-detail-image iframe,
+.project-detail-image .shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-image: url('/squiggletest.png');
+  background-size: 180% auto;
+  background-position: center;
+  opacity: 0.9;
+}
+.project-detail-image iframe { border: 0; opacity: 1; }
 
 @media (max-width: 900px) {
   .project-detail-grid { grid-template-columns: 1fr; }

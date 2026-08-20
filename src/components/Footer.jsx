@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="site-footer-bottom">
-        <span>&copy; {new Date().getFullYear()} {site.name}</span>
+        <span></span>
       </div>
     </footer>
   )

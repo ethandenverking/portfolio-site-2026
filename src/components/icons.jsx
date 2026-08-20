@@ -31,6 +31,14 @@ export function ArrowIcon(props) {
   )
 }
 
+export function PlayIcon(props) {
+  return (
+    <svg viewBox="0 0 256 256" width="22" height="22" fill="currentColor" {...props}>
+      <path d="M64 40v176l152-88Z" />
+    </svg>
+  )
+}
+
 export function StarIcon(props) {
   return (
     <svg viewBox="0 0 256 256" width="12" height="12" fill="currentColor" {...props}>

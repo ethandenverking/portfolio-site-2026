@@ -29,6 +29,21 @@ export default function ProjectDetail() {
           <ArrowIcon style={{ transform: 'rotate(225deg)' }} /> All work
         </Link>
 
+        <div className="project-detail-image">
+          {project.links.video ? (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${project.links.video}`}
+              title={`${project.title} demo video`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : project.links.image ? (
+            <img src={project.links.image} alt={`${project.title} preview`} />
+          ) : (
+            <div className="shot" />
+          )}
+        </div>
+
         <div className="project-detail-grid">
           <div className="project-detail-card">
             <div className="project-detail-index">Project {String(index + 1).padStart(2, '0')}</div>
@@ -46,21 +61,19 @@ export default function ProjectDetail() {
             </div>
           </div>
 
-          <div className="project-detail-sidebar">
-            <div>
-              <div className="field-label">Role</div>
-              <div className="field-value">{project.role}</div>
-            </div>
-            <div>
-              <div className="field-label">Stars</div>
-              <div className="field-value">{project.stars}</div>
-            </div>
-            <div>
-              <div className="field-label">Stack</div>
-              <div className="tag-row">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="tag tag-outline">{tag}</span>
-                ))}
+          <div className="project-detail-side">
+            <div className="project-detail-sidebar">
+              <div>
+                <div className="field-label">Role</div>
+                <div className="field-value">{project.role}</div>
+              </div>
+              <div>
+                <div className="field-label">Stack</div>
+                <div className="tag-row">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="tag tag-outline">{tag}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
