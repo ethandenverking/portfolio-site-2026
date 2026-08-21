@@ -24,6 +24,7 @@ export default function ProjectDetail() {
   return (
     <section className="project-detail">
       <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
+      <div className="scrap scrap-b" aria-hidden="true" />
       <div className="container">
         <Link to="/#work" className="back-link">
           <ArrowIcon style={{ transform: 'rotate(225deg)' }} /> All work

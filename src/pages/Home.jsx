@@ -22,7 +22,7 @@ export default function Home() {
     const onScroll = () => {
       const y = window.scrollY
       if (scrapARef.current) scrapARef.current.style.transform = `rotate(${-7 + y * 0.006}deg) translateY(${y * 0.12}px)`
-      if (scrapBRef.current) scrapBRef.current.style.transform = `rotate(${5 - y * 0.004}deg) translateY(${-y * 0.08}px)`
+      if (scrapBRef.current) scrapBRef.current.style.transform = `translate(-18%, 22%) rotate(${5 - y * 0.004}deg) translateY(${-y * 0.08}px)`
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -31,29 +31,33 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
         <div className="container hero-grid">
-          <div className="hero-copy-card">
-            <span className="pill-badge">{site.kicker}</span>
-            <h1>{site.headline}</h1>
-            <p className="hero-intro">{site.intro}</p>
-            <div className="hero-actions">
-              <a className="btn btn-primary" href="#work">Selected work</a>
-              <a className="btn btn-secondary" href={site.github} target="_blank" rel="noreferrer">
-                <GithubIcon /> GitHub
-              </a>
+          <div className="hero-copy-wrap">
+            <div ref={scrapBRef} className="scrap scrap-b" aria-hidden="true" />
+            <div className="hero-copy-card">
+              <span className="pill-badge">{site.kicker}</span>
+              <h1>{site.headline}</h1>
+              <p className="hero-intro">{site.intro}</p>
+              <div className="hero-actions">
+                <a className="btn btn-primary" href="#work">Selected work</a>
+                <a className="btn btn-secondary" href={site.github} target="_blank" rel="noreferrer">
+                  <GithubIcon /> GitHub
+                </a>
+              </div>
             </div>
           </div>
           <div className="hero-visual">
-            <div className="hero-image-card">
-              <div className="hero-object-cell">
-                <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
+            <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
+            <div className="hero-visual-frame">
+              <div className="hero-image-card">
+                <div className="hero-object-cell">
+                  <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
+                </div>
+                <span className="hero-caption"></span>
               </div>
-              <span className="hero-caption">Fig. 01 — the thinker, low poly</span>
             </div>
           </div>
         </div>
-        <div ref={scrapBRef} className="scrap scrap-b" aria-hidden="true" />
       </section>
 
       <section id="work" className="projects-section">

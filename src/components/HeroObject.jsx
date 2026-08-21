@@ -30,8 +30,6 @@ export default function HeroObject({ modelUrl } = {}) {
     let model = null
     let raf = null
     let t = 0
-    let pointer = 0
-    let target = 0
 
     const resize = () => {
       const { clientWidth, clientHeight } = mount
@@ -45,15 +43,10 @@ export default function HeroObject({ modelUrl } = {}) {
     const tick = () => {
       raf = requestAnimationFrame(tick)
       if (!model) return
-      t += 0.006
-      pointer += (target - pointer) * 0.05
-      model.rotation.y = t + pointer
+      t += 0.0025
+      model.rotation.y = t
       model.position.y = Math.sin(t * 1.6) * 0.09
       render()
-    }
-
-    const onMove = (e) => {
-      target = ((e.clientX / window.innerWidth) - 0.5) * 1.2
     }
 
     if (modelUrl) {
@@ -135,12 +128,10 @@ export default function HeroObject({ modelUrl } = {}) {
     tick()
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(mount)
-    window.addEventListener('pointermove', onMove, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf)
       resizeObserver.disconnect()
-      window.removeEventListener('pointermove', onMove)
       mount.removeChild(renderer.domElement)
       disposables.forEach((disposable) => disposable.dispose())
       renderer.dispose()

@@ -1,11 +1,11 @@
 export const site = {
   name: 'Ethan King',
   initials: 'E.K.',
-  tagline: 'Software engineer · Denver',
-  kicker: 'Portfolio 2026',
+  tagline: 'Software Engineer',
+  kicker: 'Portfolio',
   headline: 'Solving hard problems',
   intro:
-    'Two years in, four things shipped — small teams, real users, front-of-stack work from layout to state.',
+    "I've been writing software on and off since I was 10 years old, and most of what I know I picked up by building something, taking it apart, and figuring it out.",
   email: 'ethandenverking@gmail.com',
   github: 'https://github.com/ethandenverking',
   linkedin: 'https://www.linkedin.com/in/ethankingdev/',
@@ -44,16 +44,5 @@ export const projects = [
     tags: ['React + TS', 'AI'],
     role: 'Solo project',
     links: { repo: 'https://github.com/ethandenverking/ApplicantStack-JobBoardSkin-Generator', demo: "https://as-jobboard-generator.netlify.app/", image: '/asgeneratorthumbnail.png' },
-  },
-  {
-    slug: 'bracket-pool',
-    title: 'Bracket pool',
-    stars: 19,
-    summary: 'A weekend build for running an office tournament bracket pool.',
-    description:
-      'Built in a weekend for a coworker running an office bracket pool — bracket entry, live scoring and a leaderboard. Small scope, but shipped end-to-end including auth and deployment.',
-    tags: ['Next.js', 'Postgres'],
-    role: 'Solo project',
-    links: { repo: 'https://github.com/', demo: 'https://example.com/', image: null },
   },
 ]
