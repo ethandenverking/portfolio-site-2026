@@ -30,6 +30,7 @@ export default function Home() {
 
   return (
     <>
+      <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
       <section className="hero">
         <div className="container hero-grid">
           <div className="hero-copy-wrap">
@@ -47,14 +48,11 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-visual">
-            <div ref={scrapARef} className="scrap scrap-a" aria-hidden="true" />
-            <div className="hero-visual-frame">
-              <div className="hero-image-card">
-                <div className="hero-object-cell">
-                  <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
-                </div>
-                <span className="hero-caption"></span>
+            <div className="hero-image-card">
+              <div className="hero-object-cell">
+                <HeroObject modelUrl="/models/lowest-poly-thinker.stl" />
               </div>
+              <span className="hero-caption"></span>
             </div>
           </div>
         </div>

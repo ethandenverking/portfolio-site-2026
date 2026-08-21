@@ -110,9 +110,9 @@
   margin: 0 auto;
   padding: 7vh 0 12vh;
 }
-.hero-visual .scrap-a {
-  top: -9%;
-  right: -9%;
+.scrap-a {
+  top: 14%;
+  right: 24%;
   width: 20vw;
   height: 20vw;
   max-width: 260px;
@@ -186,7 +186,6 @@
 }
 .hero-image-card {
   position: relative;
-  z-index: 1;
   background: var(--ink);
   border: var(--paper-border);
   box-shadow: 14px 14px 0 rgba(23, 23, 26, 0.5);
@@ -316,7 +315,7 @@
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual { margin-top: 40px; }
   .hero-visual-frame { transform: none; }
-  .hero-visual .scrap-a, .hero-copy-wrap .scrap-b { display: none; }
+  .scrap-a, .hero-copy-wrap .scrap-b { display: none; }
   .project-grid { gap: 44px 30px; }
 }
 @media (max-width: 640px) {
